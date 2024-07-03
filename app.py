@@ -67,7 +67,6 @@ def clear_chat_history():
     ]
 
 def main():
-    global raw_text
     
     st.set_page_config(
         page_title="Doc Genius",
@@ -117,9 +116,9 @@ def main():
         if st.session_state.messages[-1]["role"] != "assistant":
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
-                    response = get_conversational_res(get_pdf_text(pdf_docs), prompt, chat_hist)
+                    response = get_conversational_res(raw_text, prompt, chat_hist)
                     st.write(response)
-                    st.code(raw_text)
+                    
                     
             
             if response:
