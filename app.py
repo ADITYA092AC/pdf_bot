@@ -23,7 +23,7 @@ def get_pdf_text(pdf_docs):
 def get_conversational_res(context, question, chat_hist):
     """Generate a response from the conversational AI model."""
     generation_config = {
-        "temperature": 0.5,
+        "temperature": 0.4,
         "top_p": 0.95,
         "top_k": 64,
         "max_output_tokens": 8192,
@@ -52,6 +52,7 @@ def get_conversational_res(context, question, chat_hist):
     chat_session = model.start_chat(
         history=chat_hist
     )
+    st.sidebar.code(chat_hist)
     
     response = chat_session.send_message(question)
     chat_hist.append({"role": "user", "parts": [question]})
@@ -68,8 +69,8 @@ def main():
     global raw_text
     
     st.set_page_config(
-        page_title="PDF Bot",
-        page_icon="✈"
+        page_title="Doc Genius",
+        page_icon="📚"
     )
 
     chat_hist = []
@@ -78,7 +79,7 @@ def main():
     with st.sidebar:
         st.markdown("""
         <div style="display: block; font-size: 25px; font-weight: bold; padding: 5px 10px; border: 4px double #0077cc; color: #ff9900; text-align: center; border-radius: 10px; background-color: rgba(255, 255, 255, 0.5); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);">
-            PDF Analyser
+            Doc Genius
         </div>
         """, unsafe_allow_html=True)
         st.divider()
