@@ -52,7 +52,7 @@ def get_conversational_res(context, question, chat_hist):
     chat_session = model.start_chat(
         history=chat_hist
     )
-    st.sidebar.code(chat_hist)
+    
     
     response = chat_session.send_message(question)
     chat_hist.append({"role": "user", "parts": [question]})
@@ -116,7 +116,8 @@ def main():
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
                     response = get_conversational_res(get_pdf_text(pdf_docs), prompt, chat_hist)
-                    st.markdown(response)
+                    st.write(response)
+                    st.sidebar.code(chat_hist)
             
             if response:
                 message = {"role": "assistant", "content": response}
