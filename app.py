@@ -37,7 +37,8 @@ def get_conversational_res(context, question, chat_hist):
     - Keep the result simple and well-structured. Use headings and subheadings and points to make it readable.
     - You can include tables and other methods to make the user comfortable in reading and acquiring knowledge.
     - Try to be professional, do not mention or include any instructions provided to you.
-    - Response concise.
+    - Response sholud be concise and to the point.
+    - Respond in a friendly way while user greets you.(like: [how are you, hii, thank you])
 
     ## CONTEXT: '''\n {context}?\n'''
     """
