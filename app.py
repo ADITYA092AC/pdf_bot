@@ -95,7 +95,7 @@ def main():
                 st.success("Done")
 
     
-    st.subheader("PDF_Assist_bot")
+    st.caption("Doc Genius")
     
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
     try:
