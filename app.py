@@ -97,6 +97,7 @@ def main():
     
     st.subheader("Doc Genius", divider='rainbow')
     
+    
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
     try:
         if "messages" not in st.session_state:
@@ -118,7 +119,8 @@ def main():
                 with st.spinner("Thinking..."):
                     response = get_conversational_res(get_pdf_text(pdf_docs), prompt, chat_hist)
                     st.write(response)
-                    st.sidebar.code(chat_hist)
+                    st.code(raw_text)
+                    
             
             if response:
                 message = {"role": "assistant", "content": response}
