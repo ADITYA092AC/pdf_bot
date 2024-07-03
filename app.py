@@ -61,7 +61,7 @@ def get_conversational_res(context, question, chat_hist):
 def clear_chat_history():
     """Clear the chat history."""
     st.session_state.messages = [
-        {"role": "assistant", "content": "Upload some PDFs and ask me a question."}
+        {"role": "assistant", "content": "Please upload your PDFs and feel free to ask any questions you have."}
     ]
 
 def main():
