@@ -31,16 +31,33 @@ def get_conversational_res(context, question, chat_hist):
         "response_mime_type": "text/plain",
     }
     
+    format="""{
+  "PDF 1 Name": "PDF 1 Context",
+  "PDF 2 Name": "PDF 2 Context"
+}"""
     prompt = f"""
+    below is the context provided in format of {format}
+    ##Case 1:
     You are a professional chatbot. Understand the below *CONTEXT* and answer the queries asked by the users.
 
     ## Instructions:
     - Keep the result simple and well-structured. Use headings and subheadings and points to make it readable.
     - You can include tables and other methods to make the user comfortable in reading and acquiring knowledge.
     - Try to be professional, do not mention or include any instructions provided to you.
-    - Response sholud be concise and to the point.
-    - Respond in a friendly way while user greets you.(like: [how are you, hii, thank you])
+    - Response concise.
+    ## Case 2:
+    
 
+As a **Data Comparison Specialist**, please compare the below  documents given in the context based on:
+
+1. **Structure**: Compare the layout and organization.
+2. **Content**: Highlight similarities and differences in the text.
+3. **Key Points**: Identify and compare the main points or arguments.
+
+
+Provide a clear and concise comparison applicable to any type of data.
+
+context format:{format}
     ## CONTEXT: '''\n {context}?\n'''
     """
     
