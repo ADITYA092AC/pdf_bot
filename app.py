@@ -8,17 +8,29 @@ GEMINI_API_KEY=st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=GEMINI_API_KEY)
 
 
+
 def get_pdf_text(pdf_docs):
     
+    
     text_dict = {}
+
     for pdf in pdf_docs:
-        text=''
+        try: 
+            text=''
 
-        pdf_reader = PdfReader(pdf)
-        for page in pdf_reader.pages:
+            pdf_reader = PdfReader(pdf)
+            for page in pdf_reader.pages:
+                try:
+                    
 
-            text += page.extract_text()
-        text_dict[pdf.name]=text
+                    text += page.extract_text()
+                except Exception as e:
+                    st.sidebar.error(e)
+                
+            text_dict[pdf.name]=text
+        except Exception as e:
+            st.sidebar.error(f"cannot upload {pdf} : {e}")
+        
     return text_dict
 
 def get_conversational_res(context, question, chat_hist):
@@ -89,13 +101,16 @@ def main():
         
         if st.button("Submit & Process"):
             chat_hist = []
-            with st.spinner("Processing..."):
-                raw_text = get_pdf_text(pdf_docs)
-                st.success("Done")
+            if len(pdf_docs)!=0:
+                with st.spinner("Processing..."):
+                    raw_text=get_pdf_text(pdf_docs)
+                    st.session_state.raw_text = raw_text
+                    st.success("Done")
+            else:
+                st.warning("Upload atleast one pdf.")
 
-    
+    # raw_text=get_pdf_text(pdf_docs)
     st.subheader("Doc Genius", divider='rainbow')
-    
     
     st.sidebar.button('Clear Chat History', on_click=clear_chat_history)
     try:
@@ -116,9 +131,8 @@ def main():
         if st.session_state.messages[-1]["role"] != "assistant":
             with st.chat_message("assistant"):
                 with st.spinner("Thinking..."):
-                    response = get_conversational_res(raw_text, prompt, chat_hist)
+                    response = get_conversational_res(st.session_state.raw_text , prompt, chat_hist)
                     st.write(response)
-                    
                     
             
             if response:
